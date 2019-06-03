@@ -1,0 +1,41 @@
+#Only if this option is set, Doxygen uses the “dot” tool
+#of Graphviz to generate graphs
+HAVE_DOT               = YES
+DOT_PATH = "dot"
+# To make Doxygen generate a call dependency graph
+# for every global function or class method
+CALL_GRAPH             = YES
+
+# To make Doxygen generate a caller dependency graph
+# for every global function or class method
+#CALLER_GRAPH           = YES
+
+# Since you’ll mostly be having newer version of dot(>1.8.10) ( in my case it was 2.38.0 )
+# enabling this option will make dot run faster
+DOT_MULTI_TARGETS      = YES
+
+# Since all of my code was in C, i enabled this option.
+# and i see that Doxygen run completed sooner for my case after this option was enabled.
+#OPTIMIZE_OUTPUT_FOR_  = YES
+
+# Since my code did not have any Doxygen style comments,
+# i enabled this tag
+EXTRACT_ALL            = YES
+
+# If you code is spread across sub-directories,
+# enabling this option will make Doxygen walk through code in all of them
+RECURSIVE              = YES
+
+# If you don’t need the LaTeX output;
+# better disable this option; as it saves a lot of time during graph generation
+GENERATE_LATEX         = NO
+
+# Modified the graph image file format to be svg ( default is png )
+DOT_IMAGE_FORMAT       = svg
+
+DOT_CLEANUP = NO
+# These other tags i enabled; don’t matter much for C code i guess
+EXTRACT_PACKAGE        = YES
+EXTRACT_STATIC         = YES
+EXTRACT_LOCAL_CLASSES  = YES
+STRICT_PROTO_MATCHING  = YES
