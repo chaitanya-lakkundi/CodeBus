@@ -26,8 +26,12 @@ from os import mkdir
 # of.close()
 
 repoDir = argv[1]
+
 dotsDir = repoDir + "_dots"
-mkdir(dotsDir + "/out_dots")
+try:
+	mkdir(dotsDir + "/out_dots")
+except:
+	pass
 
 dot_header = """\
 digraph "Graphical Class Hierarchy"

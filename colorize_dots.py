@@ -29,7 +29,7 @@ def colorize(tagnames):
 	cur_tagname = tagnames[0]
 	try:
 		mkdir(dotsDir + "/out_dots/coldot")
-	except:
+	except FileExistsError:
 		pass
 
 	for next_tagname in tagnames[1:]:
