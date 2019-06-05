@@ -6,11 +6,15 @@
 	# 3 Copy only dot files outside the repository (may not be !keeping folder structure)
 	# 4 Checkout to other tag/release and continue
 
-REPO=$1
-REPO=$PWD/$(echo `dirname $REPO`/`basename $REPO`)
-cp Doxyfile "$REPO"
+REPO="$1"
+if ! [[ "$REPO" = /* ]]; then
+	REPO="$PWD"/$(echo `dirname "$REPO"`/`basename "$REPO"`)
+else
+	REPO=$(echo `dirname "$REPO"`/`basename "$REPO"`)
+fi
 
-DOTS=$REPO\_dots
+DOTS="$REPO"\_dots
+
 mkdir -p "$DOTS"
 
 cd "$REPO"
@@ -39,22 +43,22 @@ done
 
 cat .tags | tr " " "\n" > tagnames
 
-git checkout master
+git checkout master # assuming master exists
 
 echo -e "\n--start--\n" >> "$REPO/stats"
 echo >> "doxygen"
 for vs in `cat "$REPO/tagnames"`; do
 	git checkout tags/"$vs"
-	
+
+	echo "$vs" >> "$REPO/stats"
 	date >> "$REPO/stats"
 	
 	doxygen > /dev/null 2>&1
-	
-	echo "$vs" >> "$REPO/stats"
 	date >> "$REPO/stats"
 
 	mkdir -p "$DOTS/$vs"
 	find . -name "*.dot" | xargs -n 100 cp -t "$DOTS/$vs"
+
 	rm -rf html
 done
 
