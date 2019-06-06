@@ -1,5 +1,6 @@
 HAVE_DOT               = YES
 CALL_GRAPH             = YES
+COLLABORATION_GRAPH	   = YES
 DOT_MULTI_TARGETS      = YES
 EXTRACT_ALL            = YES
 RECURSIVE              = YES

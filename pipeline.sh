@@ -6,14 +6,21 @@
 	# 3 Copy only dot files outside the repository (may not be !keeping folder structure)
 	# 4 Checkout to other tag/release and continue
 
+MYDIR="$PWD"
 REPO="$1"
+
+if [ ! -d "$REPO" ]; then
+	echo "$REPO does not exist"
+	exit
+fi
+
 if ! [[ "$REPO" = /* ]]; then
 	REPO="$PWD"/$(echo `dirname "$REPO"`/`basename "$REPO"`)
 else
 	REPO=$(echo `dirname "$REPO"`/`basename "$REPO"`)
 fi
 
-DOTS="$REPO"\_dots
+DOTS="$REPO"_dots
 
 mkdir -p "$DOTS"
 
@@ -29,38 +36,40 @@ echo -e "     0  $(head -n 1 tagnames)"
 
 alltags=($(cat tagnames | tr "\n" " "))
 
-truncate .tags --size 0
+# truncate .tags --size 0
 
-while read data; do
-	if [[ $data =~ "-" ]]; then
-		pos=($(echo $data | tr "-" "\n"))	
-		echo ${alltags[@]:${pos[0]}:${pos[1]}} | tee -a .tags
-	else
-		echo ${alltags[$data]} | tee -a .tags
-	fi
-	echo -e "\n\nCtrl+D to break\n\n"
-done
+# while read data; do
+# 	if [[ $data =~ "-" ]]; then
+# 		pos=($(echo $data | tr "-" "\n"))	
+# 		echo ${alltags[@]:${pos[0]}:${pos[1]}} | tee -a .tags
+# 	else
+# 		echo ${alltags[$data]} | tee -a .tags
+# 	fi
+# 	echo -e "\n\nCtrl+D to break\n\n"
+# done
 
-cat .tags | tr " " "\n" > tagnames
+# cat .tags | tr " " "\n" > tagnames
 
 git checkout master # assuming master exists
 
 echo -e "\n--start--\n" >> "$REPO/stats"
 echo >> "doxygen"
-for vs in `cat "$REPO/tagnames"`; do
-	git checkout tags/"$vs"
+cp "$MYDIR/Doxyfile" "$REPO/"
 
-	echo "$vs" >> "$REPO/stats"
-	date >> "$REPO/stats"
+# for vs in `cat "$REPO/tagnames"`; do
+# 	git checkout tags/"$vs"
+
+# 	echo "$vs" >> "$REPO/stats"
+# 	date >> "$REPO/stats"
 	
-	doxygen > /dev/null 2>&1
-	date >> "$REPO/stats"
+# 	doxygen > /dev/null 2>&1
+# 	date >> "$REPO/stats"
 
-	mkdir -p "$DOTS/$vs"
-	find . -name "*.dot" | xargs -n 100 cp -t "$DOTS/$vs"
+# 	mkdir -p "$DOTS/$vs"
+# 	find . -name "*.dot" | xargs -n 100 cp -t "$DOTS/$vs"
 
-	rm -rf html
-done
+# 	rm -rf html
+# done
 
 git checkout master
 cd ..
@@ -72,7 +81,7 @@ echo -e "\n--pip2--\n" >> "$REPO/stats"
 echo -e "\nIntegrate Nodes\n" >> "$REPO/stats"
 date >> "$REPO/stats"
 
-cd "$REPO/.."
+cd "$MYDIR"
 python3 integrate_nodes.py "$REPO"
 
 date >> "$REPO/stats"
@@ -83,7 +92,7 @@ cd "$REPO"
 mkdir -p "$REPO/diffs"
 
 for vs in `cat "$REPO/tagnames"`;do 
-	grep -P -o "label=\".*?\"" "$DOTS/out_dots"/"out_$vs.dot" | cut -d"=" -f2 | tr -d '"' | sort | uniq > "$REPO/diffs/cls_$vs"
+	grep -P -o "\[label=\".*?\"" "$DOTS/out_dots"/"out_$vs.dot" | cut -d"=" -f2 | tr -d '"' | sort | uniq > "$REPO/diffs/cls_$vs"
 done
 
 # Correct Syntax
@@ -106,7 +115,7 @@ cd "$REPO"
 echo -e "\nColorize Dots\n" >> "$REPO/stats"
 date >> "$REPO/stats"
 
-cd "$REPO/.."
+cd "$MYDIR"
 python3 colorize_dots.py "$REPO"
 
 date >> "$REPO/stats"
@@ -114,16 +123,23 @@ date >> "$REPO/stats"
 # 6 Generate PDF
 
 cd "$DOTS/out_dots/coldot"
-flatTagsPDF=$(for tn in `cat "$REPO/tagnames"`; do echo out\_$tn\_col.pdf; done | tr "\n" " ")
+flatTagsPDF=$(for tn in `cat "$REPO/tagnames"`; do echo out_"$tn"_col.pdf; done | tr "\n" " ")
 
-echo -e "\nDot to PDF\n" >> "$REPO/stats"
+echo -e "\n--Dot to PDF--\n" >> "$REPO/stats"
 
-for vs in `cat "$REPO/tagnames"`; do 
+for vs in `cat "$REPO/tagnames"`; do
 	echo "$vs" >> "$REPO/stats"
 	date >> "$REPO/stats"
+	echo "generating dot for $vs"
 	dot -Tpdf out\_"$vs"\_col.dot -o out\_"$vs"\_col.pdf &
 	date >> "$REPO/stats"
 done
 
 wait
-pdftk $flatTagsPDF cat output "$REPO/.."/$(basename "$REPO")\_evolution.pdf
+
+cd "$MYDIR"
+bash count_changes.sh "$REPO"
+python3 plot_graph.py "$REPO"
+
+cd "$DOTS/out_dots/coldot"
+pdftk $flatTagsPDF cat output "$REPO/"$(basename "$REPO")\_evolution.pdf

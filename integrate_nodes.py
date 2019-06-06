@@ -2,30 +2,11 @@ from glob import glob
 from sys import argv
 from os import mkdir
 
-# data = open("inh_all.dot").readlines()
-# label_list = open("all_labels").readlines()
-# numLabel = dict()
-
-# for num,label in enumerate(label_list):
-#     label = label.strip()
-#     numLabel[label] = num
-
-# of = open("inh_theone.dot","w")
-
-# for item in data:
-#     try:
-#         label = item.split('"')[1]
-#         num = numLabel[label]
-#         pos = item.find("[")
-#         item = "Node" + str(num) + " " + item[pos:]
-            
-#     except:
-#         pass
-    
-#     of.write(item)
-# of.close()
+print("\nintegrate_nodes.py START")
 
 repoDir = argv[1]
+if repoDir[-1] == "/":
+	repoDir = repoDir[:-1]
 
 dotsDir = repoDir + "_dots"
 try:
@@ -51,7 +32,7 @@ def generate_numLabels(dotfiles):
 		with open(each_dotfile) as df:
 			for line in df.readlines():
 				try:
-					if "label=" in line:
+					if "[label=" in line:
 						all_labels.append(line.split('"')[1])
 				except:
 					pass
@@ -68,7 +49,7 @@ def generate_integrated_dotfile(tagname):
 	of = open(dotsDir + "/" + "out_dots/" + "out_" + tagname + ".dot","w")
 	of.write(dot_header)
 
-	all_dots = glob(dotsDir + "/" + tagname + "/*cgraph.dot", recursive=True)
+	all_dots = glob(dotsDir + "/" + tagname + "/*__coll__graph.dot", recursive=True)
 
 	filtered_dots = all_dots
 	# filtered_dots = list(filter(lambda item: item.startswith("only_dots/html_1.1/"), all_dots))
@@ -127,3 +108,5 @@ with open(repoDir + "/tagnames") as tf:
 
 for each_tag in tagnames:
 	generate_integrated_dotfile(each_tag)
+
+print("\nintegrate_nodes.py END")
