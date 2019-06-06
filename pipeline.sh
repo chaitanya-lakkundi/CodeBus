@@ -36,19 +36,19 @@ echo -e "     0  $(head -n 1 tagnames)"
 
 alltags=($(cat tagnames | tr "\n" " "))
 
-# truncate .tags --size 0
+truncate .tags --size 0
 
-# while read data; do
-# 	if [[ $data =~ "-" ]]; then
-# 		pos=($(echo $data | tr "-" "\n"))	
-# 		echo ${alltags[@]:${pos[0]}:${pos[1]}} | tee -a .tags
-# 	else
-# 		echo ${alltags[$data]} | tee -a .tags
-# 	fi
-# 	echo -e "\n\nCtrl+D to break\n\n"
-# done
+while read data; do
+	if [[ $data =~ "-" ]]; then
+		pos=($(echo $data | tr "-" "\n"))	
+		echo ${alltags[@]:${pos[0]}:${pos[1]}} | tee -a .tags
+	else
+		echo ${alltags[$data]} | tee -a .tags
+	fi
+	echo -e "\n\nCtrl+D to break\n\n"
+done
 
-# cat .tags | tr " " "\n" > tagnames
+cat .tags | tr " " "\n" > tagnames
 
 git checkout master # assuming master exists
 
@@ -56,20 +56,20 @@ echo -e "\n--start--\n" >> "$REPO/stats"
 echo >> "doxygen"
 cp "$MYDIR/Doxyfile" "$REPO/"
 
-# for vs in `cat "$REPO/tagnames"`; do
-# 	git checkout tags/"$vs"
+for vs in `cat "$REPO/tagnames"`; do
+	git checkout tags/"$vs"
 
-# 	echo "$vs" >> "$REPO/stats"
-# 	date >> "$REPO/stats"
+	echo "$vs" >> "$REPO/stats"
+	date >> "$REPO/stats"
 	
-# 	doxygen > /dev/null 2>&1
-# 	date >> "$REPO/stats"
+	doxygen > /dev/null 2>&1
+	date >> "$REPO/stats"
 
-# 	mkdir -p "$DOTS/$vs"
-# 	find . -name "*.dot" | xargs -n 100 cp -t "$DOTS/$vs"
+	mkdir -p "$DOTS/$vs"
+	find . -name "*.dot" | xargs -n 100 cp -t "$DOTS/$vs"
 
-# 	rm -rf html
-# done
+	rm -rf html
+done
 
 git checkout master
 cd ..

@@ -38,4 +38,5 @@ plt.ylabel("Number of Components")
 plt.title(repoDir.split("/")[-1] + " - Collaboration Graph Evolution")
 plt.text(max(x)/2, min(removed), "Total Components = " + total_components)
 
+ax.set(xticks=x)
 fig.savefig(repoDir + "/" + "plot.png", dpi=300)
