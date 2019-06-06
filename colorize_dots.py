@@ -1,6 +1,8 @@
 from sys import argv
 from os import mkdir
 
+print("colorize_dots.py START")
+
 repoDir = argv[1]
 dotsDir = repoDir + "_dots"
 
@@ -69,3 +71,4 @@ def colorize(tagnames):
 tagnames = [tag.strip() for tag in open(repoDir + "/tagnames").readlines()]
 
 colorize(tagnames)
+print("colorize_dots.py END")

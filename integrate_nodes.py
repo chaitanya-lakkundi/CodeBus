@@ -2,29 +2,7 @@ from glob import glob
 from sys import argv
 from os import mkdir
 
-# data = open("inh_all.dot").readlines()
-# label_list = open("all_labels").readlines()
-# numLabel = dict()
-
-# for num,label in enumerate(label_list):
-#     label = label.strip()
-#     numLabel[label] = num
-
-# of = open("inh_theone.dot","w")
-
-# for item in data:
-#     try:
-#         label = item.split('"')[1]
-#         num = numLabel[label]
-#         pos = item.find("[")
-#         item = "Node" + str(num) + " " + item[pos:]
-            
-#     except:
-#         pass
-    
-#     of.write(item)
-# of.close()
-
+print("\nintegrate_nodes.py START")
 repoDir = argv[1]
 
 dotsDir = repoDir + "_dots"
@@ -127,3 +105,5 @@ with open(repoDir + "/tagnames") as tf:
 
 for each_tag in tagnames:
 	generate_integrated_dotfile(each_tag)
+
+print("\nintegrate_nodes.py END")

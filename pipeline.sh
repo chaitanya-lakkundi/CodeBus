@@ -6,14 +6,16 @@
 	# 3 Copy only dot files outside the repository (may not be !keeping folder structure)
 	# 4 Checkout to other tag/release and continue
 
+MYDIR="$PWD"
 REPO="$1"
+
 if ! [[ "$REPO" = /* ]]; then
 	REPO="$PWD"/$(echo `dirname "$REPO"`/`basename "$REPO"`)
 else
 	REPO=$(echo `dirname "$REPO"`/`basename "$REPO"`)
 fi
 
-DOTS="$REPO"\_dots
+DOTS="$REPO"_dots
 
 mkdir -p "$DOTS"
 
@@ -47,6 +49,8 @@ git checkout master # assuming master exists
 
 echo -e "\n--start--\n" >> "$REPO/stats"
 echo >> "doxygen"
+cp "$MYDIR/Doxyfile" "$REPO/"
+
 for vs in `cat "$REPO/tagnames"`; do
 	git checkout tags/"$vs"
 
@@ -72,7 +76,7 @@ echo -e "\n--pip2--\n" >> "$REPO/stats"
 echo -e "\nIntegrate Nodes\n" >> "$REPO/stats"
 date >> "$REPO/stats"
 
-cd "$REPO/.."
+cd "$MYDIR"
 python3 integrate_nodes.py "$REPO"
 
 date >> "$REPO/stats"
@@ -106,7 +110,7 @@ cd "$REPO"
 echo -e "\nColorize Dots\n" >> "$REPO/stats"
 date >> "$REPO/stats"
 
-cd "$REPO/.."
+cd "$MYDIR"
 python3 colorize_dots.py "$REPO"
 
 date >> "$REPO/stats"
@@ -116,14 +120,20 @@ date >> "$REPO/stats"
 cd "$DOTS/out_dots/coldot"
 flatTagsPDF=$(for tn in `cat "$REPO/tagnames"`; do echo out\_$tn\_col.pdf; done | tr "\n" " ")
 
-echo -e "\nDot to PDF\n" >> "$REPO/stats"
+echo -e "\n--Dot to PDF--\n" >> "$REPO/stats"
 
-for vs in `cat "$REPO/tagnames"`; do 
+for vs in `cat "$REPO/tagnames"`; do
 	echo "$vs" >> "$REPO/stats"
 	date >> "$REPO/stats"
+	echo "generating dot for $vs"
 	dot -Tpdf out\_"$vs"\_col.dot -o out\_"$vs"\_col.pdf &
 	date >> "$REPO/stats"
 done
 
 wait
+
+cd "$MYDIR"
+bash count_changes.sh "$REPO"
+python3 plot_graph.py "$REPO"
+
 pdftk $flatTagsPDF cat output "$REPO/.."/$(basename "$REPO")\_evolution.pdf

@@ -7,10 +7,26 @@ else
 	REPO=$(echo `dirname "$REPO"`/`basename "$REPO"`)
 fi
 
-DOTS="$REPO"\_dots
+DOTS="$REPO"_dots
 
 cd "$DOTS/out_dots/coldot"
-echo "$PWD"
 
-rg --count "#ff5c33" *.dot > count_red
-rg --count "#85e085" *.dot > count_green
+truncate --size 0 count_red
+truncate --size 0 count_green
+
+# cat "$REPO/tagnames" | xargs -n 1 -I {} rg --count "#ff5c33" "out_"{}"_col.dot" >> count_red
+# cat "$REPO/tagnames" | xargs -n 1 -I {} rg --count "#85e085" "out_"{}"_col.dot" >> count_green
+
+for tag in `cat "$REPO/tagnames"`; do
+	rg --count "#ff5c33" "out_"$tag"_col.dot" >> count_red
+	if [[ $? -eq 1 ]]; then
+		echo "0" >> count_red
+	fi
+done
+
+for tag in `cat "$REPO/tagnames"`; do
+	rg --count "#85e085" "out_"$tag"_col.dot" >> count_green
+	if [[ $? -eq 1 ]]; then
+		echo "0" >> count_green
+	fi
+done
