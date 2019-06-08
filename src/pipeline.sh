@@ -143,4 +143,4 @@ bash count_changes.sh "$REPO"
 python3 plot_graph.py "$REPO"
 
 cd "$DOTS/out_dots/coldot"
-pdftk $flatTagsPDF cat output "$REPO/"$(basename "$REPO")\_evolution.pdf
+qpdf --empty --pages $flatTagsPDF -- "$REPO/"$(basename "$REPO")-evolution.pdf
