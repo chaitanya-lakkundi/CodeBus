@@ -6,3 +6,31 @@
 - https://github.com/radareorg/cutter
 - https://github.com/airbnb/epoxy
 - https://github.com/OpenKinect/libfreenect2
+
+## Installation Method 1
+### Using generic installation of softwares
+
+1. Clone this repository and navigate to this directory in terminal.
+2. Execute `./install.sh`
+3. Execute `./run.sh ../Repos/cutter`   OR    `./run.sh PATH-TO-REPO` to analyze the repository.
+
+## Installation Method 2
+### Using Docker
+#### Dependencies are automatically installed
+
+1. Download `Dockerfile` and save it in a new directory. Navigate to the new directory in terminal.
+2. Execute `docker build -t codebus .` to create `codebus` docker image.
+3. Execute `docker create --name codebus-run -t -i codebus` to create container named `codebus-run`.
+4. `docker start codebus-run` to start the container.
+5. `docker attach codebus-run` to get to command prompt.
+6. Execute `./run.sh ../cutter` to analyze `cutter`.
+
+#### How to copy files from Docker container to your host filesystem?
+Execute `docker cp codebus-run:/home/cutter/cutter-evolution.pdf .`
+and `docker cp codebus-run:/home/cutter/plot.png .` to copy both files.
+
+## Output Files
+
+Finally, mega collaboration diagram and area plots are generated in 
+
+**PATH-TO-REPO/cutter-evolution.pdf and PATH-TO-REPO/plot.png**

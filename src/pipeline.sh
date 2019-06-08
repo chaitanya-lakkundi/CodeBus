@@ -28,9 +28,9 @@ cd "$REPO"
 git tag --sort=creatordate > tagnames
 
 echo -e "\nThis repository contains $(wc -l tagnames) releases."
-echo -e "\nPlease enter the number of every release (in asc order) that you wish to keep and analyze."
+echo -e "\nPlease enter the index number of every release (in ascending order) that you wish to keep and analyze."
 echo -e "\nYour can enter range by specifying such as 2-5 -> staring from 2, totally 5 elements -> includes 2,3,4,5,6"
-echo -e "\nOne argument per line. Either range or single number.\n"
+echo -e "\nOne argument per line. Either range or single number. Then press enter.\n"
 echo -e "     0  $(head -n 1 tagnames)"
 /bin/cat -n <(tail -n +2 tagnames)
 
@@ -45,10 +45,10 @@ while read data; do
 	else
 		echo ${alltags[$data]} | tee -a .tags
 	fi
-	echo -e "\n\nCtrl+D to break\n\n"
+	echo -e "\n\nPress Ctrl+D to break and proceed. (OR) Enter another index number or range \n\n"
 done
 
-cat .tags | tr " " "\n" > tagnames
+cat .tags | uniq | tr " " "\n" > tagnames
 
 git checkout master # assuming master exists
 
