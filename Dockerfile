@@ -21,3 +21,5 @@ RUN git clone https://github.com/chaitanya-lakkundi/CodeBus.git && \
         git clone https://github.com/OpenKinect/libfreenect2.git
 
 WORKDIR "/home/CodeBus"
+
+CMD ["bash"]

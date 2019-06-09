@@ -7,16 +7,18 @@
 - https://github.com/airbnb/epoxy
 - https://github.com/OpenKinect/libfreenect2
 
-## Installation Method 1
-### Using generic installation of softwares
+## Installation Method 1 
+### Using generic installation of softwares (Tested on Ubuntu 16.04 and 18.04) 
 
 1. Clone this repository and navigate to this directory in terminal.
 2. Execute `./install.sh`
 3. Execute `./run.sh ../Repos/cutter`   OR    `./run.sh PATH-TO-REPO` to analyze the repository.
 
 ## Installation Method 2
-### Using Docker
-#### Dependencies are automatically installed
+### Using Docker (20 minutes to install under our setup, Roughly 250 MB download)
+#### Supports any operating system where `docker` is installed.
+
+Assuming `docker` is installed. [Tutorial to install docker](https://www.digitalocean.com/community/tutorials/how-to-install-and-use-docker-on-ubuntu-18-04)
 
 1. Download `Dockerfile` and save it in a new directory. Navigate to the new directory in terminal.
 2. Execute `docker build -t codebus .` to create `codebus` docker image.
