@@ -7,6 +7,16 @@
 - https://github.com/airbnb/epoxy
 - https://github.com/OpenKinect/libfreenect2
 
+### What is a [Collaboration graph]?
+A graph for each documented class showing the direct and indirect implementation dependencies (inheritance, containment, and class references variables) of the class with other documented classes.
+
+[Collaboration graph]: http://www.doxygen.nl/manual/config.html#cfg_collaboration_graph
+
+### What is a [Call graph]?
+A call dependency graph for every global function or class method.
+
+[Call graph]: http://www.doxygen.nl/manual/config.html#cfg_call_graph
+
 ## Installation Method 1 
 ### Using generic installation of softwares (Tested on Ubuntu 16.04 and 18.04) 
 
