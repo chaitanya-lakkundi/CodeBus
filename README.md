@@ -8,14 +8,16 @@
 - https://github.com/OpenKinect/libfreenect2
 
 ### What is a [Collaboration graph]?
-A graph for each documented class showing the direct and indirect implementation dependencies (inheritance, containment, and class references variables) of the class with other documented classes.
+A graph for each documented class showing the direct and indirect implementation dependencies (inheritance, containment, and class references variables) of the class with other documented classes. -- [[1]]
 
 [Collaboration graph]: http://www.doxygen.nl/manual/config.html#cfg_collaboration_graph
+[1]: http://www.doxygen.nl/manual/config.html#cfg_collaboration_graph
 
 ### What is a [Call graph]?
-A call dependency graph for every global function or class method.
+A call dependency graph for every global function or class method. -- [[2]]
 
 [Call graph]: http://www.doxygen.nl/manual/config.html#cfg_call_graph
+[2]: http://www.doxygen.nl/manual/config.html#cfg_call_graph
 
 ## Installation Method 1 
 ### Using generic installation of softwares (Tested on Ubuntu 16.04 and 18.04) 
@@ -28,7 +30,9 @@ A call dependency graph for every global function or class method.
 ### Using Docker (20 minutes to install under our setup, Roughly 250 MB download)
 #### Supports any operating system where `docker` is installed.
 
-Assuming `docker` is installed. [Tutorial to install docker](https://www.digitalocean.com/community/tutorials/how-to-install-and-use-docker-on-ubuntu-18-04)
+Assuming `docker` is installed. ([Tutorial to install docker])
+
+[Tutorial to install docker]: https://www.digitalocean.com/community/tutorials/how-to-install-and-use-docker-on-ubuntu-18-04
 
 1. Download `Dockerfile` and save it in a new directory. Navigate to the new directory in terminal.
 2. Execute `docker build -t codebus .` to create `codebus` docker image.
