@@ -7,17 +7,11 @@
 	# 4 Checkout to other tag/release and continue
 
 MYDIR="$PWD"
-REPO="$1"
+REPO=$(realpath "$1")
 
 if [ ! -d "$REPO" ]; then
 	echo "$REPO does not exist"
 	exit
-fi
-
-if ! [[ "$REPO" = /* ]]; then
-	REPO="$PWD"/$(echo `dirname "$REPO"`/`basename "$REPO"`)
-else
-	REPO=$(echo `dirname "$REPO"`/`basename "$REPO"`)
 fi
 
 DOTS="$REPO"_dots
