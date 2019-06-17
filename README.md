@@ -27,6 +27,8 @@ A call dependency graph for every global function or class method. -- [[2]]
 
 Assuming `docker` is installed. ([Tutorial to install docker])
 
+[Tutorial to install docker]: https://www.digitalocean.com/community/tutorials/how-to-install-and-use-docker-on-ubuntu-18-04
+
 1. Execute `docker pull cs18s502/codebus:v1.1` to pull the image.
 2. `docker run --name codebus-run -it cs18s502/codebus:v1.1` to create a container and run.
 3. `./run.sh ../cutter`  OR  `./run.sh PATH-TO-REPO` to analyze the repository.
