@@ -2,7 +2,7 @@
 ## ISHA Research Lab (Intelligent Software and Human Analytics)
 
 ## Docker Image
-[![](https://images.microbadger.com/badges/image/cs18s502/codebus.svg)](https://microbadger.com/images/cs18s502/codebus "Get your own image badge on microbadger.com") [![](https://images.microbadger.com/badges/version/cs18s502/codebus.svg)](https://microbadger.com/images/cs18s502/codebus "Get your own version badge on microbadger.com")
+[![](https://images.microbadger.com/badges/image/cs18s502/codebus.svg)](https://microbadger.com/images/cs18s502/codebus "cs18s502/codebus") [![](https://images.microbadger.com/badges/version/cs18s502/codebus.svg)](https://microbadger.com/images/cs18s502/codebus "cs18s502/codebus")
 
 ## Analyzed Repositories from [RapidRelease](https://github.com/saketrule/RapidRelease) dataset
 
