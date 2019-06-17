@@ -27,7 +27,7 @@ A call dependency graph for every global function or class method. -- [[2]]
 3. Execute `./run.sh ../Repos/cutter`   OR    `./run.sh PATH-TO-REPO` to analyze the repository.
 
 ## Installation Method 2
-### Using Docker (15 minutes to install under our setup, ~250 MB download)
+### Using Docker (10 minutes to install under our setup, ~200 MB download)
 #### Supports any operating system where `docker` is installed.
 
 Assuming `docker` is installed. ([Tutorial to install docker])

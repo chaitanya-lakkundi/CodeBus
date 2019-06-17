@@ -1,13 +1,17 @@
 FROM ubuntu:18.04
 
 RUN apt-get update && \
-        apt-get install -y python3 python3-pip git-core curl doxygen \
-        graphviz qpdf
+    apt-get install -y python3 python3-distutils git-core wget doxygen graphviz qpdf
 
 WORKDIR "/tmp"
 
-RUN curl -LO https://github.com/BurntSushi/ripgrep/releases/download/11.0.1/ripgrep_11.0.1_amd64.deb && \
-        dpkg -i ripgrep_11.0.1_amd64.deb
+RUN wget https://github.com/BurntSushi/ripgrep/releases/download/11.0.1/ripgrep_11.0.1_amd64.deb && \
+        dpkg -i ripgrep_11.0.1_amd64.deb && \
+        rm ripgrep_11.0.1_amd64.deb
+
+RUN wget https://bootstrap.pypa.io/get-pip.py && \
+	python3 get-pip.py --no-setuptools --no-wheel && \
+	rm get-pip.py
 
 RUN pip3 install matplotlib
 
