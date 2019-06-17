@@ -1,6 +1,9 @@
 # CodeBus
 ## ISHA Research Lab (Intelligent Software and Human Analytics)
 
+## Docker Image
+[![](https://images.microbadger.com/badges/image/cs18s502/codebus.svg)](https://microbadger.com/images/cs18s502/codebus "Get your own image badge on microbadger.com") [![](https://images.microbadger.com/badges/version/cs18s502/codebus.svg)](https://microbadger.com/images/cs18s502/codebus "Get your own version badge on microbadger.com")
+
 ## Analyzed Repositories from [RapidRelease](https://github.com/saketrule/RapidRelease) dataset
 
 - https://github.com/radareorg/cutter
@@ -19,31 +22,31 @@ A call dependency graph for every global function or class method. -- [[2]]
 [Call graph]: http://www.doxygen.nl/manual/config.html#cfg_call_graph
 [2]: http://www.doxygen.nl/manual/config.html#cfg_call_graph
 
-## Installation Method 1 
+## Installation Method 1
+### Pull Docker Image (Fastest Method depending upon Internet connection speed)
+
+Assuming `docker` is installed. ([Tutorial to install docker])
+
+1. Execute `docker pull cs18s502/codebus:v1.1` to pull the image.
+2. `docker run --name codebus-run -it cs18s502/codebus:v1.1` to create a container and run.
+3. `./run.sh ../cutter`  OR  `./run.sh PATH-TO-REPO` to analyze the repository.
+4. Execute `exit` to stop the container.
+
+**PS:** If you want to start the container once again, execute the following commands.
+
+1. `docker start codebus-run`
+2. `docker attach codebus-run`
+
+### How to copy files from Docker container to your host filesystem?
+Execute `docker cp codebus-run:/home/cutter/cutter-evolution.pdf .`
+and `docker cp codebus-run:/home/cutter/plot.png .` to copy both files.
+
+## Installation Method 2 
 ### Using generic installation of softwares (Tested on Ubuntu 16.04 and 18.04) 
 
 1. Clone this repository and navigate to this directory in terminal.
 2. Execute `./install.sh`
 3. Execute `./run.sh ../Repos/cutter`   OR    `./run.sh PATH-TO-REPO` to analyze the repository.
-
-## Installation Method 2
-### Using Docker (10 minutes to install under our setup, ~200 MB download)
-#### Supports any operating system where `docker` is installed.
-
-Assuming `docker` is installed. ([Tutorial to install docker])
-
-[Tutorial to install docker]: https://www.digitalocean.com/community/tutorials/how-to-install-and-use-docker-on-ubuntu-18-04
-
-1. Download `Dockerfile` and save it in a new directory. Navigate to the new directory in terminal.
-2. Execute `docker build -t codebus .` to create `codebus` docker image.
-3. Execute `docker create --name codebus-run -t -i codebus` to create container named `codebus-run`.
-4. `docker start codebus-run` to start the container.
-5. `docker attach codebus-run` to get to command prompt.
-6. Execute `./run.sh ../cutter` to analyze `cutter`.
-
-#### How to copy files from Docker container to your host filesystem?
-Execute `docker cp codebus-run:/home/cutter/cutter-evolution.pdf .`
-and `docker cp codebus-run:/home/cutter/plot.png .` to copy both files.
 
 ## Output Files
 
