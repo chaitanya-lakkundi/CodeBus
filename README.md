@@ -22,6 +22,16 @@ A call dependency graph for every global function or class method. -- [[2]]
 [Call graph]: http://www.doxygen.nl/manual/config.html#cfg_call_graph
 [2]: http://www.doxygen.nl/manual/config.html#cfg_call_graph
 
+## Evolution of Architecture (in number of components)
+![Full Plot](/Unified-Diagrams/full-plot.png?raw=true)
+
+## Sample Architectural Changes in Cutter
+![Sample Cutter 1](/Unified-Diagrams/samplecutter1.png?raw=true)
+![Sample Cutter 2](/Unified-Diagrams/samplecutter2.png?raw=true)
+
+## Sample Architectural Changes in libfreenect2
+![Sample libfreenect 1](/Unified-Diagrams/samplelibfreenect1.png?raw=true)
+
 ## Installation Method 1
 ### Pull Docker Image (Fastest Method depending upon Internet connection speed)
 
